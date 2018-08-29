@@ -1,8 +1,7 @@
 package controller;
 
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import model.User;
+import model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +20,13 @@ public class DefaultController {
     @RequestMapping(value = "/mybatis")
     public ModelAndView indexView(@RequestParam String id, HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
-        User user = userService.getUserUsingId(id);
+        Song song = userService.getUserUsingId(id);
         ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("user",user);
+        modelAndView.addObject("song",song);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/user.do")
+    /*@RequestMapping(value = "/user.do")
     public ModelAndView getUser(){
         User user = new User();
         user.setId("1");
@@ -37,5 +36,5 @@ public class DefaultController {
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("user", user);
         return modelAndView;
-    }
+    }*/
 }

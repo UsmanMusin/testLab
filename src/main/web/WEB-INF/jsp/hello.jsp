@@ -12,10 +12,13 @@
 </head>
 <body>
 
-<h1>${user.id}</h1>
-<h2>${user.command}</h2>
-<h3>${user.content}</h3>
-<h4>${user.description}</h4>
+<h1>${song.id}</h1>
+<h2>${song.name}</h2>
+<h3>${song.artist}</h3>
+<h4>${song.album}</h4>
+<h4>${song.date}</h4>
+<h4>${song.duration}</h4>
+
 
 </body>
 </html>
