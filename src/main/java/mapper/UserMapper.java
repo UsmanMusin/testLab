@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UserMapper {
-    @Select("select * from message where id = #{id}")
+    @Select("select * from APP.MESSAGE where id = #{id}")
     public User getUserUsingId(@Param("id") int id);
 
     @Select("select * from message where command = #{command}")

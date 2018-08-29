@@ -3,11 +3,18 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="url" value="jdbc:mysql://localhost:3306/test"/>
         <property name="username" value="root"/>
         <property name="password" value=""/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    </bean>-->
+
+    <bean  name="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+        <property name="url" value="jdbc:derby://localhost:1527/test;create=true"/>
+        <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
+        <property name="username" value="test"/>
+        <property name="password" value="test"/>
     </bean>
 
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -16,7 +23,8 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.listenzhangbin.web.mapper"/>
+        <property name="basePackage" value="mapper"/>
+        <!--<property name="basePackage" value="com.listenzhangbin.web.mapper"/>-->
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
