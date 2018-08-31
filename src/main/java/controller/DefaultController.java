@@ -4,14 +4,14 @@ package controller;
 import model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
+@SessionAttributes({"user","role"})
 public class DefaultController {
 
     @Autowired
@@ -26,6 +26,31 @@ public class DefaultController {
         return modelAndView;
     }
 
+    @RequestMapping("start.do")
+    public ModelAndView start(@SessionAttribute("user") String user,
+                              @SessionAttribute("role") int role) {
+        if (user == null) {
+            ModelAndView mv = new ModelAndView("login");
+            return mv;
+        } else {
+            if (role == 1) {
+                ModelAndView mv = new ModelAndView("admin");
+                return mv;
+            }
+            else {
+                ModelAndView mv = new ModelAndView("user");
+                return mv;
+            }
+
+        }
+    }
+
+
+    @RequestMapping(value = "check.do", method = RequestMethod.POST)
+    public ModelAndView checkuser(@RequestParam String user, String pass) {
+        ModelAndView mv = new ModelAndView("login");
+        return mv;
+    }
     /*@RequestMapping(value = "/user.do")
     public ModelAndView getUser(){
         User user = new User();

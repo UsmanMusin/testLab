@@ -22,6 +22,14 @@ public class REST_Controller {
         modelAndView.addObject("song",songs);
         return modelAndView;
     }
+    @RequestMapping("start")
+    public ModelAndView start() {
+        ModelAndView mv = new ModelAndView("login");
+        return mv;
+    }
+
+
+
 
     /*@RequestMapping(value = "/empset.do", method = RequestMethod.GET, produces = "application/json")
     public List<Employee> getEmpSet() {
