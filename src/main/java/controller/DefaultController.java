@@ -3,37 +3,39 @@ package controller;
 
 import model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import service.UserService;
+import service.MyService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes({"user","role"})
 public class DefaultController {
 
     @Autowired
-    private UserService userService;
+    private MyService service;
 
     @RequestMapping(value = "/mybatis")
     public ModelAndView indexView(@RequestParam String id, HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
-        Song song = userService.getUserUsingId(id);
+        Song song = service.getUserUsingId(id);
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("song",song);
         return modelAndView;
     }
 
     @RequestMapping("start.do")
-    public ModelAndView start(@SessionAttribute("user") String user,
-                              @SessionAttribute("role") int role) {
-        if (user == null) {
+    public ModelAndView start(HttpSession session) {
+        if (session.getAttribute("user") == null) {
             ModelAndView mv = new ModelAndView("login");
             return mv;
-        } else {
-            if (role == 1) {
+        }
+        else {
+            if ((Integer)session.getAttribute("role") == 1) {
                 ModelAndView mv = new ModelAndView("admin");
                 return mv;
             }
@@ -42,14 +44,35 @@ public class DefaultController {
                 return mv;
             }
 
-        }
+            }
+
     }
 
 
     @RequestMapping(value = "check.do", method = RequestMethod.POST)
-    public ModelAndView checkuser(@RequestParam String user, String pass) {
-        ModelAndView mv = new ModelAndView("login");
-        return mv;
+    public ModelAndView checkuser(@RequestParam String login, String password) {
+        int resultCheck = service.checkUser(login, password);
+        if(resultCheck==0){
+            ModelAndView mv = new ModelAndView("login");
+            mv.addObject("error","Неверный логин или пароль");
+            return mv;
+        }
+        else {
+            if(resultCheck==1){
+                ModelAndView mv = new ModelAndView("admin");
+                mv.addObject("user", login);
+                mv.addObject("role",1);
+                return mv;
+            }
+            else{
+                ModelAndView mv = new ModelAndView("user");
+                mv.addObject("user", login);
+                mv.addObject("role",2);
+                return mv;
+            }
+        }
+
+
     }
     /*@RequestMapping(value = "/user.do")
     public ModelAndView getUser(){

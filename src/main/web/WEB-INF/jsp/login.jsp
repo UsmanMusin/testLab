@@ -9,16 +9,16 @@
   <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-<a class="adminButton" href="admin.do"/>Администрирование</a><br>
-<a class="adminButton" href="init.do"/>Заполнить базу</a>&nbsp&nbsp${initmsg}
+<%--<a class="adminButton" href="admin.do"/>Администрирование</a><br>
+<a class="adminButton" href="init.do"/>Заполнить базу</a>&nbsp&nbsp${initmsg}--%>
 
 <div align="center">
   <form class="form-container" action="check.do" method="post">
     <div class="form-title"><h2>Авторизация</h2></div>
-    <div class="form-title">Ваше Имя</div>
-    <input class="form-field" type="text" name="user" /><br />
+    <div class="form-title">Логин</div>
+    <input class="form-field" type="text" name="login" /><br />
     <div class="form-title">Пароль</div>
-    <input class="form-field" type="password" name="pass" /><br />
+    <input class="form-field" type="password" name="password" /><br />
     <div class="submit-container">
       <input class="submit-button" type="submit" value="Войти" />
       <div class="status">${error}</div>

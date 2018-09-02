@@ -4,7 +4,7 @@ import model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import service.UserService;
+import service.MyService;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 public class REST_Controller {
 
     @Autowired
-    private UserService userService;
+    private MyService service;
 
     @RequestMapping(value = "/mybatiss")
     public ModelAndView indexView(@RequestParam String id, HttpServletResponse response){
         //response.setCharacterEncoding("utf-8");
-        Song songs = userService.getUserUsingId(id);
+        Song songs = service.getUserUsingId(id);
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("song",songs);
         return modelAndView;
