@@ -19,15 +19,6 @@ public class DefaultController {
     @Autowired
     private MyService service;
 
-    @RequestMapping(value = "/mybatis")
-    public ModelAndView indexView(@RequestParam String id, HttpServletResponse response){
-        response.setCharacterEncoding("utf-8");
-        Song song = service.getUserUsingId(id);
-        ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("song",song);
-        return modelAndView;
-    }
-
     @RequestMapping("start.do")
     public ModelAndView start(HttpSession session) {
         if (session.getAttribute("user") == null) {

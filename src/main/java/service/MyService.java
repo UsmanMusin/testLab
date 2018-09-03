@@ -6,6 +6,8 @@ import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MyService {
 
@@ -30,6 +32,10 @@ public class MyService {
                 return 2;
             }
         }
+    }
+
+    public List<Song> getAllSongs(){
+        return mapper.getAllSongs();
     }
 
 
