@@ -8,47 +8,57 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<style>
-    table,th,td {
-        border : 1px solid black;
-        border-collapse: collapse;
-    }
-    th,td {
-        padding: 5px;
-    }
-</style>
+<head>
+    <script>
+        var i = 0, len;
+
+        displaySongs(i);
+
+        function displaySongs(i) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myArr = JSON.parse(this.responseText);
+                    myFunction(myArr, i);
+                }
+            };
+            xmlhttp.open("GET", "/rest/allsongs.do", true);
+            xmlhttp.send();
+        }
+
+        function myFunction(json, i) {
+            len = json.length;
+            document.getElementById("showCD").innerHTML =
+                "Name: " +
+                json[i].name +
+                "<br>Artist: " +
+                json[i].artist +
+                "<br>Album: " +
+                json[i].album;
+            document.getElementById("currentPage").innerHTML = i + 1;
+        }
+
+        function next() {
+            if (i < len-1) {
+                i++;
+                displaySongs(i);
+            }
+        }
+
+        function previous() {
+            if (i > 0) {
+                i--;
+                displaySongs(i);
+            }
+        }
+    </script>
+</head>
 <body>
 
-<button type="button" onclick="loadXMLDoc()">Get my CD collection</button>
-<br><br>
-<table id="demo"></table>
-
-<script>
-    function loadXMLDoc() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                myFunction(this);
-            }
-        };
-        xmlhttp.open("GET", "cd_catalog.xml", true);
-        xmlhttp.send();
-    }
-    function myFunction(xml) {
-        var i;
-        var xmlDoc = xml.responseXML;
-        var table="<tr><th>Artist</th><th>Title</th></tr>";
-        var x = xmlDoc.getElementsByTagName("CD");
-        for (i = 0; i <x.length; i++) {
-            table += "<tr><td>" +
-                x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
-                "</td><td>" +
-                x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
-                "</td></tr>";
-        }
-        document.getElementById("demo").innerHTML = table;
-    }
-</script>
+<div id='showCD'></div><br>
+<input type="button" onclick="previous()" value="<<">
+<span id = 'currentPage'></span>
+<input type="button" onclick="next()" value=">>">
 
 </body>
 </html>
