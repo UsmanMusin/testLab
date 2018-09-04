@@ -5,13 +5,15 @@
   Time: 17:20
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
     <script>
         var i = 0, len, pageSize = 5, currentPage = 1;
-
+        var j = pageSize;
         displaySongs(i);
 
         function displaySongs(i) {
@@ -28,22 +30,31 @@
 
         function myFunction(json, i) {
             len = json.length;
-            var pageData = "<table><tr><td>Name</td><td>Artist</td><td>Album</td></tr>";
-            for(k = i; k < i + pageSize; k++){
+            var pageData = "<table class='blackTB'><thead><tr><th>ID</th><th>Name</th><th>Artist</th>" +
+                "<th>Album</th><th>Date</th><th>Duration</th></tr></thead>";
+            for(k = i; k < j; k++){
                 pageData += "<tr>" +
+                        "<td>" + json[k].id + "</td>" +
                         "<td>" + json[k].name + "</td>" +
                         "<td>" + json[k].artist + "</td>" +
-                        "<td>" + json[k].album + "</td>" + "</tr>";
+                        "<td>" + json[k].album + "</td>" +
+                        "<td>" + json[k].date + "</td>" +
+                        "<td>" + json[k].duration + "</td>" + "</tr>";
             }
+            pageData += "</table>";
             document.getElementById("showCD").innerHTML = pageData;
 
             document.getElementById("currentPage").innerHTML = currentPage;
         }
 
         function next() {
-            if (i < len-1) {
+            if ((len / 5) > currentPage) {
                 i+=pageSize;
                 currentPage++;
+                if((j + pageSize) > len){
+                    j = len;
+                }
+                else j+=pageSize;
                 displaySongs(i);
             }
         }
@@ -51,6 +62,7 @@
         function previous() {
             if (i > 0) {
                 i-=pageSize;
+                j=i+pageSize;
                 currentPage--;
                 displaySongs(i);
             }
