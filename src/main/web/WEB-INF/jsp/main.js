@@ -1,4 +1,4 @@
-alert("Добро пожаловать!");
+
 var i = 0, len;
 function start() {
     displaySongs(i);

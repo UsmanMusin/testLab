@@ -10,7 +10,7 @@
 <html>
 <head>
     <script>
-        var i = 0, len;
+        var i = 0, len, pageSize = 5, currentPage = 1;
 
         displaySongs(i);
 
@@ -28,26 +28,30 @@
 
         function myFunction(json, i) {
             len = json.length;
-            document.getElementById("showCD").innerHTML =
-                "Name: " +
-                json[i].name +
-                "<br>Artist: " +
-                json[i].artist +
-                "<br>Album: " +
-                json[i].album;
-            document.getElementById("currentPage").innerHTML = i + 1;
+            var pageData = "<table><tr><td>Name</td><td>Artist</td><td>Album</td></tr>";
+            for(k = i; k < i + pageSize; k++){
+                pageData += "<tr>" +
+                        "<td>" + json[k].name + "</td>" +
+                        "<td>" + json[k].artist + "</td>" +
+                        "<td>" + json[k].album + "</td>" + "</tr>";
+            }
+            document.getElementById("showCD").innerHTML = pageData;
+
+            document.getElementById("currentPage").innerHTML = currentPage;
         }
 
         function next() {
             if (i < len-1) {
-                i++;
+                i+=pageSize;
+                currentPage++;
                 displaySongs(i);
             }
         }
 
         function previous() {
             if (i > 0) {
-                i--;
+                i-=pageSize;
+                currentPage--;
                 displaySongs(i);
             }
         }
