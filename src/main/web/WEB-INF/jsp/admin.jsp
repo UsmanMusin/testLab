@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<br>
 <head>
     <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
     <script>
@@ -67,14 +67,46 @@
                 displaySongs(i);
             }
         }
+
+        //Открытие модального окна
+
+        function showModalWin() {
+
+            var darkLayer = document.createElement('div'); // слой затемнения
+            darkLayer.id = 'shadow'; // id чтобы подхватить стиль
+            document.body.appendChild(darkLayer); // включаем затемнение
+
+            var modalWin = document.getElementById('popupWin'); // находим наше "окно"
+            modalWin.style.display = 'block'; // "включаем" его
+
+            darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
+                darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+                modalWin.style.display = 'none'; // делаем окно невидимым
+                return false;
+            };
+        }
     </script>
 </head>
-<body>
-
+<div align="center">
+<button class="myButtonadd" onclick="showModalWin()">Add</button><br><br>
 <div id='showCD'></div><br>
 <input type="button" onclick="previous()" value="<<">
 <span id = 'currentPage'></span>
 <input type="button" onclick="next()" value=">>">
+</div>
+
+
+<div style="text-align: center" id="popupWin" class="modalwin">
+    <h2> Какая-то форма </h2>
+    <form>
+        <input value="text">
+        <input type="button" value="OK">
+    </form>
+    <hr>
+    <h2> Какой-то текст </h2>
+    <br> <p> УРа!!!!!!!!!! </p>
+    <hr>
+</div>
 
 </body>
 </html>
