@@ -454,10 +454,10 @@ table.blackTB tfoot .links a{
 
 }
 .modalwin {
-    height: 200px;
-    width: 300px;
+    height: 250px;
+    width: 400px;
     border: 3px outset gray;
-    background: wheat;
+    background: #369278;
     top: 20%; /* отступ сверху */
     right: 0;
     left: 0;

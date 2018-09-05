@@ -38,5 +38,9 @@ public class MyService {
         return mapper.getAllSongs();
     }
 
+    public void addSong(String name, String artist, String album, int date, int duration){
+        mapper.addSong(name, artist, album, date, duration);
+    }
+
 
 }

@@ -1,11 +1,19 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Song {
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("artist")
     private String artist;
+    @JsonProperty("album")
     private String album;
+    @JsonProperty("date")
     private int date;
+    @JsonProperty("duration")
     private int duration;
 
     public int getId() {

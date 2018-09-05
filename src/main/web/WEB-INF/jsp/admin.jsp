@@ -30,8 +30,8 @@
 
         function myFunction(json, i) {
             len = json.length;
-            var pageData = "<table class='blackTB'><thead><tr><th>ID</th><th>Name</th><th>Artist</th>" +
-                "<th>Album</th><th>Date</th><th>Duration</th></tr></thead>";
+            var pageData = "<table class='blackTB'><thead><tr><th>№</th><th>Название</th><th>Исполнитель</th>" +
+                "<th>Альбом</th><th>Год</th><th>Длительность</th></tr></thead>";
             for(k = i; k < j; k++){
                 pageData += "<tr>" +
                         "<td>" + json[k].id + "</td>" +
@@ -82,13 +82,38 @@
             darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
                 darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
                 modalWin.style.display = 'none'; // делаем окно невидимым
+                displaySongs(i);
                 return false;
             };
+        }
+
+        function addSong() {
+
+            var xhr = new XMLHttpRequest();
+
+            var body = 'name=' + encodeURIComponent(name) +
+                '&artist=' + encodeURIComponent(artist) +
+                '&album=' + encodeURIComponent(album) +
+                '&date=' + encodeURIComponent(date) +
+                '&duration=' + encodeURIComponent(duration);
+
+            xhr.open("POST", '/rest/addsong.do', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.send(body);
+
+
+            /*xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("addmsg").innerHTML = request.responseText;
+                }
+            };*/
+
         }
     </script>
 </head>
 <div align="center">
-<button class="myButtonadd" onclick="showModalWin()">Add</button><br><br>
+<button class="myButtonadd" onclick="showModalWin()">Добавить</button><br><br>
 <div id='showCD'></div><br>
 <input type="button" onclick="previous()" value="<<">
 <span id = 'currentPage'></span>
@@ -96,16 +121,17 @@
 </div>
 
 
-<div style="text-align: center" id="popupWin" class="modalwin">
-    <h2> Какая-то форма </h2>
-    <form>
-        <input value="text">
-        <input type="button" value="OK">
+<div id="popupWin" class="modalwin">
+    <h2> Добавить песню </h2>
+    <hr>
+    <form id = "addSong">
+        <input type="text" name="name" placeholder="Название" size="50">
+        <input type="text" name="artist" placeholder="Исполнитель" size="50">
+        <input type="text" name="album" placeholder="Альбом" size="50">
+        <input type="text" name="date" placeholder="Год" size="50">
+        <br><input type="text" name="duration" placeholder="Длительность" size="50">
+        <br><br><button class="myButtonadd" onclick="addSong()">Добавить</button><span id="addmsg"></span>
     </form>
-    <hr>
-    <h2> Какой-то текст </h2>
-    <br> <p> УРа!!!!!!!!!! </p>
-    <hr>
 </div>
 
 </body>
