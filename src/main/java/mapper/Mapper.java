@@ -2,9 +2,7 @@ package mapper;
 
 import model.Song;
 import model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,4 +25,12 @@ public interface Mapper {
             "VALUES(#{name}, #{artist}, #{album}, #{date}, #{duration})")
     public void addSong(@Param("name")String name, @Param("artist")String artist, @Param("album")String album,
                         @Param("date")int date, @Param("duration")int duration);
+
+    @Update("UPDATE APP.SONG SET name=#{name}, artist =#{artist}, album =#{album}," +
+            "date =#{date}, duration =#{duration} WHERE id =#{id}")
+    public void editSong(@Param("id")int id,@Param("name")String name, @Param("artist")String artist,
+                         @Param("album")String album, @Param("date")int date, @Param("duration")int duration);
+
+    @Delete("DELETE FROM APP.SONG WHERE id =#{id}")
+    void deleteSong(int id);
 }

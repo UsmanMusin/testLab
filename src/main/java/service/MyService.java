@@ -42,5 +42,13 @@ public class MyService {
         mapper.addSong(name, artist, album, date, duration);
     }
 
+    public void editSong(int id , String name, String artist, String album, int date, int duration){
+        mapper.editSong(id, name, artist, album, date, duration);
+    }
+
+    public void deleteSong(int id){
+        mapper.deleteSong(id);
+    }
+
 
 }

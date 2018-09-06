@@ -10,119 +10,16 @@
 <!DOCTYPE html>
 <br>
 <head>
-    <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
-    <script>
-        var i = 0, len, pageSize = 5, currentPage = 1;
-        var j = pageSize;
-        displaySongs(i);
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="<c:url value='/resources/main.css'/>" rel="stylesheet" type="text/css">
+    <script src="<c:url value="/resources/admin.js"/>"></script>
 
-        function displaySongs(i) {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var myArr = JSON.parse(this.responseText);
-                    myFunction(myArr, i);
-                }
-            };
-            xmlhttp.open("GET", "/rest/allsongs.do", true);
-            xmlhttp.send();
-        }
-
-        function myFunction(json, i) {
-            len = json.length;
-            var pageData = "<table class='blackTB'><thead><tr><th>№</th><th>Название</th><th>Исполнитель</th>" +
-                "<th>Альбом</th><th>Год</th><th>Длительность</th></tr></thead>";
-            for(k = i; k < j; k++){
-                pageData += "<tr>" +
-                        "<td>" + json[k].id + "</td>" +
-                        "<td>" + json[k].name + "</td>" +
-                        "<td>" + json[k].artist + "</td>" +
-                        "<td>" + json[k].album + "</td>" +
-                        "<td>" + json[k].date + "</td>" +
-                        "<td>" + json[k].duration + "</td>" + "</tr>";
-            }
-            pageData += "</table>";
-            document.getElementById("showCD").innerHTML = pageData;
-
-            document.getElementById("currentPage").innerHTML = currentPage;
-        }
-
-        function next() {
-            if ((len / 5) > currentPage) {
-                i+=pageSize;
-                currentPage++;
-                if((j + pageSize) > len){
-                    j = len;
-                }
-                else j+=pageSize;
-                displaySongs(i);
-            }
-        }
-
-        function previous() {
-            if (i > 0) {
-                i-=pageSize;
-                j=i+pageSize;
-                currentPage--;
-                displaySongs(i);
-            }
-        }
-
-        //Открытие модального окна
-
-        function showModalWin() {
-
-            var darkLayer = document.createElement('div'); // слой затемнения
-            darkLayer.id = 'shadow'; // id чтобы подхватить стиль
-            document.body.appendChild(darkLayer); // включаем затемнение
-
-            var modalWin = document.getElementById('popupWin'); // находим наше "окно"
-            modalWin.style.display = 'block'; // "включаем" его
-
-            darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
-                darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
-                modalWin.style.display = 'none'; // делаем окно невидимым
-                displaySongs(i);
-                return false;
-            };
-        }
-
-        function addSong() {
-            var xhr = new XMLHttpRequest();
-            var json = JSON.stringify({
-                name: document.getElementById("aname").value,
-                artist: document.getElementById("aartist").value,
-                album: document.getElementById("aalbum").value,
-                date: document.getElementById("adate").value ,
-                duration: document.getElementById("aduration").value
-            });
-
-
-            xhr.open("POST", '/rest/addsong.do', true);
-            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("addmsg").innerHTML = "&nbsp&nbsp Добавлена!";
-                    setTimeout(function(){ document.getElementById('popupWin').style.display = "none";
-                        var element = document.getElementById("shadow");
-                        element.parentNode.removeChild(element);
-                        document.getElementById("addmsg").innerHTML = "";
-
-                        displaySongs(i);},2000);
-
-                }
-            };
-            xhr.send(json);
-
-
-
-
-        }
-    </script>
 </head>
+
+<%--Элементы основной страницы--%>
+<a class="myButtonDel" href="exit.do"/>Выйти</a>
 <div align="center">
-<button class="myButtonadd" onclick="showModalWin()">Добавить</button><br><br>
+<button class="myButtonadd" onclick="addWin()">Добавить</button><br><br>
 <div id='showCD'></div><br>
 <input type="button" onclick="previous()" value="<<">
 <span id = 'currentPage'></span>
@@ -130,18 +27,46 @@
 </div>
 
 
-<div id="popupWin" class="modalwin">
-    <h2> Добавить песню </h2>
+<div id="popupWin" class="modalwin"></div> <%--// Модальное окно--%>
+
+<div id="addForm" class="modalwin">  <%--// Форма добавления--%>
+    <h2> Добавление песни </h2>
     <hr>
     <form id = "addSong" onsubmit="addSong(); return false;">
-        <input type="text" id="aname" name="name" placeholder="Название" size="50">
-        <input type="text" id="aartist" name="artist" placeholder="Исполнитель" size="50">
-        <input type="text" id="aalbum" name="album" placeholder="Альбом" size="50">
-        <input type="text" id="adate" name="date" placeholder="Год" size="50">
-        <br><input type="text" id="aduration" name="duration" placeholder="Длительность" size="50">
+        <input type="text" id="aName" name="name" placeholder="Название" size="50">
+        <input type="text" id="aArtist" name="artist" placeholder="Исполнитель" size="50">
+        <input type="text" id="aAlbum" name="album" placeholder="Альбом" size="50">
+        <input type="text" id="aDate" name="date" placeholder="Год" size="50">
+        <br><input type="text" id="aDuration" name="duration" placeholder="Длительность" size="50">
         <br><br><button type="submit" class="myButtonadd">Добавить</button><span id="addmsg"></span>
     </form>
 </div>
+
+<div id="editForm" class="modalwin">  <%--// Форма изменения--%>
+    <h2> Редактирование песни </h2>
+    <hr>
+    <form id = "editSong" onsubmit="editSong(); return false;">
+        <input type="text" id="eName" name="name" placeholder="Название" size="50">
+        <input type="text" id="eArtist" name="artist" placeholder="Исполнитель" size="50">
+        <input type="text" id="eAlbum" name="album" placeholder="Альбом" size="50">
+        <input type="text" id="eDate" name="date" placeholder="Год" size="50">
+        <br><input type="text" id="eDuration" name="duration" placeholder="Длительность" size="50">
+        <br><br><button type="submit" class="myButtonadd">Сохранить</button><span id="addmsg"></span>
+    </form>
+</div>
+
+<div id="showForm" class="modalwin">  <%--// Форма показа--%>
+    <h2> Просмотр песни </h2>
+    <hr>
+    <form id = "showSong" >
+        <span><b>Название: </b></span><span id="sName"></span>
+        <br><span><b>Исполнитель: </b></span><span id="sArtist"></span>
+        <br><span><b>Альбом: </b></span><span id="sAlbum"></span>
+        <br><span><b>Год: </b></span><span id="sDate"></span>
+        <br><span><b>Длительность: </b></span><span id="sDuration"></span>
+    </form>
+</div>
+
 
 </body>
 </html>

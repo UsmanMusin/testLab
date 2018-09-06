@@ -34,5 +34,21 @@ public class REST_Controller {
         return "OK";
     }
 
+    @RequestMapping(value = "/editsong.do", method = RequestMethod.POST, consumes = {"application/json"})
+    public @ResponseBody String editSong(@RequestBody Song song){
+        System.out.println("-------------------------------------------------------");
+        System.out.println(song);
+        System.out.println("-------------------------------------------------------");
+
+        service.editSong(song.getId(),song.getName(), song.getArtist(),song.getAlbum(),song.getDate(),song.getDuration());
+        return "OK";
+    }
+
+    @RequestMapping(value = "/delsong/{id}.do", method = RequestMethod.GET)
+    public @ResponseBody String editSong(@PathVariable int id){
+        service.deleteSong(id);
+        return "OK";
+    }
+
 
 }

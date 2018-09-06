@@ -1,5 +1,4 @@
-
-
+﻿
 // Пагинация
 
 var i = 0, len, idNum, pageSize = 5, currentPage = 1;
