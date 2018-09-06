@@ -24,10 +24,14 @@ public class REST_Controller {
         return service.getAllSongs();
     }
 
-    @RequestMapping(value = "/addsong.do", method = RequestMethod.POST)
-    public void addSong(@RequestParam String name, @RequestParam String artist, @RequestParam String album,
-                        @RequestParam int date, @RequestParam int duration){
-        service.addSong(name, artist,album,date,duration);
+    @RequestMapping(value = "/addsong.do", method = RequestMethod.POST, consumes = {"application/json"})
+    public @ResponseBody String addSong(@RequestBody Song song){
+        System.out.println("-------------------------------------------------------");
+        System.out.println(song);
+        System.out.println("-------------------------------------------------------");
+
+        service.addSong(song.getName(), song.getArtist(),song.getAlbum(),song.getDate(),song.getDuration());
+        return "OK";
     }
 
 

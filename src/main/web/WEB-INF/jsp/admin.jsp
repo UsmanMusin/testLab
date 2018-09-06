@@ -88,26 +88,35 @@
         }
 
         function addSong() {
-
             var xhr = new XMLHttpRequest();
+            var json = JSON.stringify({
+                name: document.getElementById("aname").value,
+                artist: document.getElementById("aartist").value,
+                album: document.getElementById("aalbum").value,
+                date: document.getElementById("adate").value ,
+                duration: document.getElementById("aduration").value
+            });
 
-            var body = 'name=' + encodeURIComponent(name) +
-                '&artist=' + encodeURIComponent(artist) +
-                '&album=' + encodeURIComponent(album) +
-                '&date=' + encodeURIComponent(date) +
-                '&duration=' + encodeURIComponent(duration);
 
             xhr.open("POST", '/rest/addsong.do', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
-            xhr.send(body);
-
-
-            /*xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("addmsg").innerHTML = request.responseText;
+                    document.getElementById("addmsg").innerHTML = "&nbsp&nbsp Добавлена!";
+                    setTimeout(function(){ document.getElementById('popupWin').style.display = "none";
+                        var element = document.getElementById("shadow");
+                        element.parentNode.removeChild(element);
+                        document.getElementById("addmsg").innerHTML = "";
+
+                        displaySongs(i);},2000);
+
                 }
-            };*/
+            };
+            xhr.send(json);
+
+
+
 
         }
     </script>
@@ -124,13 +133,13 @@
 <div id="popupWin" class="modalwin">
     <h2> Добавить песню </h2>
     <hr>
-    <form id = "addSong">
-        <input type="text" name="name" placeholder="Название" size="50">
-        <input type="text" name="artist" placeholder="Исполнитель" size="50">
-        <input type="text" name="album" placeholder="Альбом" size="50">
-        <input type="text" name="date" placeholder="Год" size="50">
-        <br><input type="text" name="duration" placeholder="Длительность" size="50">
-        <br><br><button class="myButtonadd" onclick="addSong()">Добавить</button><span id="addmsg"></span>
+    <form id = "addSong" onsubmit="addSong(); return false;">
+        <input type="text" id="aname" name="name" placeholder="Название" size="50">
+        <input type="text" id="aartist" name="artist" placeholder="Исполнитель" size="50">
+        <input type="text" id="aalbum" name="album" placeholder="Альбом" size="50">
+        <input type="text" id="adate" name="date" placeholder="Год" size="50">
+        <br><input type="text" id="aduration" name="duration" placeholder="Длительность" size="50">
+        <br><br><button type="submit" class="myButtonadd">Добавить</button><span id="addmsg"></span>
     </form>
 </div>
 
