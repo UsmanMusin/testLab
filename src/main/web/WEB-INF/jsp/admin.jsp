@@ -42,6 +42,19 @@
     </form>
 </div>
 
+<div id="searchForm" class="modalwin">  <%--// Форма добавления--%>
+    <h2> Поиск песен </h2>
+    <hr>
+    <form id = "addSong" onsubmit="searchSong(); return false;">
+        <input type="text" id="fName" name="name" placeholder="Название" size="50">
+        <input type="text" id="fArtist" name="artist" placeholder="Исполнитель" size="50">
+        <input type="text" id="fAlbum" name="album" placeholder="Альбом" size="50">
+        <input type="text" id="fDate" name="date" placeholder="Год" size="50">
+        <br><input type="text" id="fDuration" name="duration" placeholder="Длительность" size="50">
+        <br><br><button type="submit" class="myButtonadd">Добавить</button><span id="addmsg"></span>
+    </form>
+</div>
+
 <div id="editForm" class="modalwin">  <%--// Форма изменения--%>
     <h2> Редактирование песни </h2>
     <hr>

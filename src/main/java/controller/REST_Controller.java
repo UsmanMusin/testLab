@@ -26,19 +26,12 @@ public class REST_Controller {
 
     @RequestMapping(value = "/addsong.do", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody String addSong(@RequestBody Song song){
-        System.out.println("-------------------------------------------------------");
-        System.out.println(song);
-        System.out.println("-------------------------------------------------------");
-
         service.addSong(song.getName(), song.getArtist(),song.getAlbum(),song.getDate(),song.getDuration());
         return "OK";
     }
 
     @RequestMapping(value = "/editsong.do", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody String editSong(@RequestBody Song song){
-        System.out.println("-------------------------------------------------------");
-        System.out.println(song);
-        System.out.println("-------------------------------------------------------");
 
         service.editSong(song.getId(),song.getName(), song.getArtist(),song.getAlbum(),song.getDate(),song.getDuration());
         return "OK";

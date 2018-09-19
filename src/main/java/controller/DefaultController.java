@@ -73,15 +73,5 @@ public class DefaultController {
         ModelAndView mv = new ModelAndView("login");
         return mv;
     }
-    /*@RequestMapping(value = "/user.do")
-    public ModelAndView getUser(){
-        User user = new User();
-        user.setId("1");
-        user.setCommand("frefge");
-        user.setContent("ewgrg");
-        user.setDescription("fefwe");
-        ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }*/
+
 }

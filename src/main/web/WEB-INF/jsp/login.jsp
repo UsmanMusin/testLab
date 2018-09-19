@@ -6,7 +6,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Содержимое базы</title>
-  <link href="<c:url value='/main.css'/>" rel="stylesheet" type="text/css">
+  <link href="<c:url value='/resources/main.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <%--<a class="adminButton" href="admin.do"/>Администрирование</a><br>
