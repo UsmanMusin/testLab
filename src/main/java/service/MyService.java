@@ -6,6 +6,7 @@ import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,6 +49,18 @@ public class MyService {
 
     public void deleteSong(int id){
         mapper.deleteSong(id);
+    }
+
+    public List<Song> searchSongs(String name, String artist, String album, int date, int duration){
+        List<Song> allsongs = mapper.getAllSongs();
+        List<Song> filteredSongs = new ArrayList<Song>();
+        Song song = new Song();
+        for (Song s: allsongs) {
+            if(s.customComparator(song)){
+                filteredSongs.add(s);
+            }
+        }
+        return filteredSongs;
     }
 
 

@@ -64,6 +64,25 @@ public class Song {
         this.duration = duration;
     }
 
+    /*public Song(String name, String artist, String album, int date, int duration){
+        this.name = name;
+        this.artist = artist;
+        this.album = album;
+        this.date = date;
+        this.duration = duration;
+    }*/
+
+    public boolean customComparator(Song song){
+        if((this.name.equals(song.name))|| (song.name == null)&
+        (this.artist.equals(song.artist))|| (song.artist == null)&
+        (this.album.equals(song.album))|| (song.album == null)&
+        (this.date == song.date)||(song.date == 0)&
+        (this.duration == song.duration)||(song.duration == 0)){
+            return true;
+        }
+        else return false;
+    }
+
 
     @Override
     public String toString() {

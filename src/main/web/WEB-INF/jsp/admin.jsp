@@ -19,7 +19,9 @@
 <%--Элементы основной страницы--%>
 <a class="myButtonDel" href="exit.do"/>Выйти</a>
 <div align="center">
-<button class="myButtonadd" onclick="addWin()">Добавить</button><br><br>
+    <div id="closeSearch"></div>
+<button class="myButtonadd" onclick="addWin()">Добавить</button>
+    <button class="myButtonadd" onclick="searchWin()">Поиск</button><br><br>
 <div id='showCD'></div><br>
 <input type="button" onclick="previous()" value="<<">
 <span id = 'currentPage'></span>
@@ -42,7 +44,7 @@
     </form>
 </div>
 
-<div id="searchForm" class="modalwin">  <%--// Форма добавления--%>
+<div id="searchForm" class="modalwin">  <%--// Форма поиска--%>
     <h2> Поиск песен </h2>
     <hr>
     <form id = "addSong" onsubmit="searchSong(); return false;">
@@ -51,7 +53,7 @@
         <input type="text" id="fAlbum" name="album" placeholder="Альбом" size="50">
         <input type="text" id="fDate" name="date" placeholder="Год" size="50">
         <br><input type="text" id="fDuration" name="duration" placeholder="Длительность" size="50">
-        <br><br><button type="submit" class="myButtonadd">Добавить</button><span id="addmsg"></span>
+        <br><br><button type="submit" class="myButtonadd">Поиск</button><span id="addmsg"></span>
     </form>
 </div>
 

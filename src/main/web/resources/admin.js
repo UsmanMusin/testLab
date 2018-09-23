@@ -3,21 +3,23 @@
 
 var i = 0, len, idNum, pageSize = 5, currentPage = 1;
 var j = pageSize;
-displaySongs(i);
+var getallUrl = "/rest/allsongs.do";
+var currentUrl = getallUrl;
+displaySongs(currentUrl);
 
-function displaySongs(i) {
+function displaySongs(jsonUrl) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var myArr = JSON.parse(this.responseText);
-            myFunction(myArr, i);
+            myFunction(myArr);
         }
     };
-    xmlhttp.open("GET", "/rest/allsongs.do", true);
+    xmlhttp.open("GET", jsonUrl, true);
     xmlhttp.send();
 }
 // Построение таблицы с данными
-function myFunction(json, i) {
+function myFunction(json) {
     len = json.length;
     var pageData = "<table class='blackTB'><thead><tr><th>№</th><th>Название</th><th>Исполнитель</th>" +
         "<th>Альбом</th><th>Год</th><th>Длительность</th><th></th><th></th></tr></thead>";
@@ -46,7 +48,7 @@ function next() {
             j = len;
         }
         else j+=pageSize;
-        displaySongs(i);
+        displaySongs(currentUrl);
     }
 }
 // Предыдущая страница
@@ -55,7 +57,7 @@ function previous() {
         i-=pageSize;
         j=i+pageSize;
         currentPage--;
-        displaySongs(i);
+        displaySongs(currentUrl);
     }
 }
 
@@ -75,7 +77,7 @@ function showModalWin(formType) {
     darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
         darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
         modalWin.style.display = 'none'; // делаем окно невидимым
-        displaySongs(i);
+        displaySongs(currentUrl);
         return false;
     };
 }
@@ -107,11 +109,39 @@ function addSong() {
                 element.parentNode.removeChild(element);
                 document.getElementById("addmsg").innerHTML = "";
 
-                displaySongs(i);},2000);
+                displaySongs(currentUrl);},2000);
 
         }
     };
     xhr.send(json);
+}
+
+//Построение окна поиска
+function  searchWin() {
+    showModalWin(document.getElementById("searchForm"));
+}
+
+//Фильтрация таблицы по критериям поиска
+function searchSong() {
+    var searchUrl = "rest/filterSongs.do?"
+        + "name=" + document.getElementById("fName").value + "&" +
+        + "artist=" + document.getElementById("fArtist").value + "&" +
+        + "album=" + document.getElementById("fAlbum").value + "&" +
+        + "date=" + document.getElementById("fDate").value + "&" +
+        + "duration=" + document.getElementById("fDuration").value + "&";
+    currentUrl = searchUrl;
+    document.getElementById("closeSearch").innerHTML =
+        "<button onclick=\"closeSearch()\">Вернуться к списку</button>";
+    i = 0, pageSize = 5, currentPage = 1; j = pageSize;
+    displaySongs(currentUrl);
+}
+
+//Функция закрытия фильтрованной таблицы
+function closeSearch() {
+    currentUrl = getallUrl;
+    document.getElementById("closeSearch").innerHTML = null;
+    i = 0, pageSize = 5, currentPage = 1; j = pageSize;
+    displaySongs(currentUrl);
 }
 
 // Построение массива с данными из выбранной строки
@@ -149,7 +179,7 @@ function editWin(arr) {
     showModalWin(document.getElementById("editForm"));
 }
 
-// Построение окна изменения
+// Построение окна просмотра
 function ShowWin(arr) {
 
     document.getElementById("sName").innerHTML = arr[1];
@@ -183,7 +213,7 @@ function editSong() {
                 element.parentNode.removeChild(element);
                 document.getElementById("addmsg").innerHTML = "";
 
-                displaySongs(i);},2000);
+                displaySongs(currentUrl);},2000);
 
         }
     };
@@ -210,7 +240,7 @@ function delSong(id) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            displaySongs(i);
+            displaySongs(currentUrl);
         }
     }
     xmlhttp.open("GET", "/rest/delsong/" +id + ".do", true);
