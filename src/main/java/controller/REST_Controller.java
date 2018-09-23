@@ -45,10 +45,13 @@ public class REST_Controller {
 
     @RequestMapping(value = "/filterSongs.do", method = RequestMethod.GET)
     public List<Song> SearchSongs(@RequestParam("name") String name, @RequestParam("artist") String artist,
-                                  @RequestParam("album") String album, @RequestParam("date") int date,
-                                  @RequestParam("duration") int duration){
+                                  @RequestParam("album") String album, @RequestParam("date") String date,
+                                  @RequestParam("duration") String duration){
+        System.out.println("--------------------------------------------------");
         System.out.print(date);
         System.out.print(duration);
+        System.out.println("--------------------------------------------------");
+
 /*
         return service.searchSongs(name, artist, album, date, duration);
 */

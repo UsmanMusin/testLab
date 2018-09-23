@@ -125,10 +125,10 @@ function  searchWin() {
 function searchSong() {
     var searchUrl = "rest/filterSongs.do?"
         + "name=" + document.getElementById("fName").value + "&" +
-        + "artist=" + document.getElementById("fArtist").value + "&" +
-        + "album=" + document.getElementById("fAlbum").value + "&" +
-        + "date=" + document.getElementById("fDate").value + "&" +
-        + "duration=" + document.getElementById("fDuration").value + "&";
+         "artist=" + document.getElementById("fArtist").value + "&" +
+         "album=" + document.getElementById("fAlbum").value + "&" +
+         "date=" + document.getElementById("fDate").value + "&" +
+         "duration=" + document.getElementById("fDuration").value + "&";
     currentUrl = searchUrl;
     document.getElementById("closeSearch").innerHTML =
         "<button onclick=\"closeSearch()\">Вернуться к списку</button>";
