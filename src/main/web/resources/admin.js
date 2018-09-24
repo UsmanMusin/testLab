@@ -21,6 +21,9 @@ function displaySongs(jsonUrl) {
 // Построение таблицы с данными
 function myFunction(json) {
     len = json.length;
+    if(len < j){
+        j = len;
+    }
     var pageData = "<table class='blackTB'><thead><tr><th>№</th><th>Название</th><th>Исполнитель</th>" +
         "<th>Альбом</th><th>Год</th><th>Длительность</th><th></th><th></th></tr></thead>";
     for(k = i; k < j; k++){
@@ -128,11 +131,16 @@ function searchSong() {
          "artist=" + document.getElementById("fArtist").value + "&" +
          "album=" + document.getElementById("fAlbum").value + "&" +
          "date=" + document.getElementById("fDate").value + "&" +
-         "duration=" + document.getElementById("fDuration").value + "&";
+         "duration=" + document.getElementById("fDuration").value;
     currentUrl = searchUrl;
     document.getElementById("closeSearch").innerHTML =
         "<button onclick=\"closeSearch()\">Вернуться к списку</button>";
     i = 0, pageSize = 5, currentPage = 1; j = pageSize;
+    document.getElementById('popupWin').style.display = "none";
+    var element = document.getElementById("shadow");
+    element.parentNode.removeChild(element);
+    document.getElementById("addmsg").innerHTML = "";
+    document.getElementById("showCD").innerHTML = "";
     displaySongs(currentUrl);
 }
 

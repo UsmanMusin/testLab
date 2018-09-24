@@ -3,12 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
-        <property name="username" value="root"/>
-        <property name="password" value=""/>
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    </bean>-->
 
     <bean  name="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="url" value="jdbc:derby://localhost:1527/test;create=true"/>

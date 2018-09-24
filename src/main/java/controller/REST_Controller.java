@@ -43,20 +43,11 @@ public class REST_Controller {
         return "OK";
     }
 
-    @RequestMapping(value = "/filterSongs.do", method = RequestMethod.GET)
-    public List<Song> SearchSongs(@RequestParam("name") String name, @RequestParam("artist") String artist,
-                                  @RequestParam("album") String album, @RequestParam("date") String date,
-                                  @RequestParam("duration") String duration){
-        System.out.println("--------------------------------------------------");
-        System.out.print(date);
-        System.out.print(duration);
-        System.out.println("--------------------------------------------------");
-
-/*
+    @RequestMapping(value = "/filterSongs.do", method = RequestMethod.GET, produces = "application/json")
+    public List<Song> SearchSongs(@RequestParam(value="name", required = false) String name, @RequestParam(value="artist", required=false) String artist,
+                                  @RequestParam(value="album", required=false) String album, @RequestParam(value="date", required=false) String date,
+                                  @RequestParam(value="duration", required=false) String duration){
         return service.searchSongs(name, artist, album, date, duration);
-*/
-        return service.getAllSongs();
-
     }
 
 
